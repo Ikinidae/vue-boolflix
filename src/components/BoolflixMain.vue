@@ -4,10 +4,8 @@
 
         <SearchBar @mySearch="searchFilm"/>
 
-        {{userText}}
-
         <ProductCard
-            v-for="(item, i) in filmList"
+            v-for="(item, i) in filteredFilmList"
             :key="i"
             :objectCard="item"
         />
@@ -49,8 +47,20 @@ export default {
         },
         searchFilm(textUser) {
             this.userText = textUser;
+            console.log(textUser);
         }
     },
+    computed: {
+        filteredFilmList() {
+            if (this.userText === "") {
+                return this.filmList;
+            } else {
+                return this.filmList.filter(item => {
+                    return item.title.toLowerCase().includes(this.userText.toLowerCase())
+                });
+            }
+        }
+    }
 }
 </script>
 
