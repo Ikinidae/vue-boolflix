@@ -2,8 +2,8 @@
     <div>
         <input type="text" placeholder="Scrivi qui il nome del film"
             v-model="inputText"
-            @keyup.enter="$emit('mySearch', inputText)"
         />
+        <button @click="$emit('mySearch', inputText)">Cerca</button>
     </div>
 </template>
 

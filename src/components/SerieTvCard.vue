@@ -1,10 +1,9 @@
 <template>
     <div>
-        <h3>{{objectCard.title}}</h3>
-        <p>{{objectCard.original_title}}</p>
-        <p><lang-flag :iso="objectCard.original_language" /></p>
-        <p>{{objectCard.vote_average}}</p>
-        
+        <h3>{{objectCardSerieTv.name}}</h3>
+        <p>{{objectCardSerieTv.original_name}}</p>
+        <p>Lingua originale: <lang-flag :iso="objectCardSerieTv.original_language" /></p>
+        <p>{{objectCardSerieTv.vote_average}}</p>
     </div>
 </template>
 
@@ -12,12 +11,12 @@
 import LangFlag from 'vue-lang-code-flags';
 
 export default {
-    name: 'ProductCard',
+    name: 'SerieTvCard',
     components: {
         LangFlag
     },
     props: {
-        objectCard: Object
+        objectCardSerieTv: Object
     },
 }
 </script>

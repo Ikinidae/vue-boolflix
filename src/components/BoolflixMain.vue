@@ -4,47 +4,73 @@
 
         <SearchBar @mySearch="searchFilm"/>
 
-        <ProductCard
+        <FilmCard
             v-for="(item, i) in filmList"
             :key="i"
-            :objectCard="item"
+            :objectCardFilm="item"
+        />
+
+        <SerieTvCard
+            v-for="(item, i) in serieTvList"
+            :key="i"
+            :objectCardSerieTv="item"
         />
     </div>
 </template>
 
 <script>
 import axios from "axios"
-import ProductCard from "./ProductCard.vue"
+import FilmCard from "./FilmCard.vue"
 import SearchBar from "./SearchBar.vue";
+import SerieTvCard from "./SerieTvCard.vue";
 
 export default {
     name: "BoolflixMain",
     components: {
-    ProductCard,
-    SearchBar
+    FilmCard,
+    SearchBar,
+    SerieTvCard
 },
     data() {
         return {
-            // apiUrl: this.filteredApiUrl,
-            apiUrl: "https://api.themoviedb.org/3/search/movie?api_key=e110a76546d14ef00629c28529c7b91b&language=it-IT&page=1&include_adult=true",
+            apiUrlFilm: "https://api.themoviedb.org/3/search/movie?api_key=e110a76546d14ef00629c28529c7b91b&language=it-IT&page=1&include_adult=true",
+            apiUrlSerieTv: "https://api.themoviedb.org/3/search/tv?api_key=e110a76546d14ef00629c28529c7b91b&language=it-IT&page=1&include_adult=true",
             filmList: [],
+            serieTvList: [],
             userText: "",
         }
     },
     created() {
         this.getFilm();
+        this.getSerieTv();
     },
     methods: {
         // per importare i dati da API
         getFilm() {
             if (this.userText !== "") {
-                let currentUrl = this.apiUrl + "&query=" + this.userText;
-                console.log(currentUrl);
+                let currentUrl = this.apiUrlFilm + "&query=" + this.userText;
+                // console.log(currentUrl);
                 axios
                     .get(currentUrl)
                     .then((result) => {
                     this.filmList = result.data.results;
                     console.log(this.filmList);
+                })
+                    .catch((error) => {
+                    console.log("Errore", error);
+                }),
+                this.getSerieTv()
+            }
+        },
+        getSerieTv() {
+            if (this.userText !== "") {
+                let currentUrl = this.apiUrlSerieTv + "&query=" + this.userText;
+                // console.log(currentUrl);
+                axios
+                    .get(currentUrl)
+                    .then((result) => {
+                    this.serieTvList = result.data.results;
+                    console.log(this.serieTvList);
                 })
                     .catch((error) => {
                     console.log("Errore", error);
