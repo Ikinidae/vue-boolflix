@@ -1,5 +1,6 @@
 <template>
     <div>
+        <img :src="'https://image.tmdb.org/t/p/w342' + objectCardFilm.poster_path" alt="">
         <h3>{{objectCardFilm.title}}</h3>
         <p>{{objectCardFilm.original_title}}</p>
         <p>Lingua originale: <lang-flag :iso="objectCardFilm.original_language" /></p>
@@ -11,7 +12,7 @@
 import LangFlag from 'vue-lang-code-flags';
 
 export default {
-    name: 'FilmCard',
+    name: 'ProductCard',
     components: {
         LangFlag
     },
