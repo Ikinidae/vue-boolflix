@@ -5,7 +5,7 @@
         <SearchBar @mySearch="searchFilm"/>
 
         <ProductCard
-            v-for="(item, i) in filteredFilmList"
+            v-for="(item, i) in filmList"
             :key="i"
             :objectCard="item"
         />
@@ -25,7 +25,8 @@ export default {
 },
     data() {
         return {
-            apiUrl: "https://api.themoviedb.org/3/search/movie?api_key=e110a76546d14ef00629c28529c7b91b&language=it-IT&query=Fight+Club&page=1&include_adult=true",
+            // apiUrl: this.filteredApiUrl,
+            apiUrl: "https://api.themoviedb.org/3/search/movie?api_key=e110a76546d14ef00629c28529c7b91b&language=it-IT&page=1&include_adult=true",
             filmList: [],
             userText: "",
         }
@@ -34,31 +35,28 @@ export default {
         this.getFilm();
     },
     methods: {
+        // per importare i dati da API
         getFilm() {
-            axios
-                .get(this.apiUrl)
-                .then((result) => {
-                this.filmList = result.data.results;
-                console.log(this.filmList);
-            })
-                .catch((error) => {
-                console.log("Errore", error);
-            });
-        },
-        searchFilm(textUser) {
-            this.userText = textUser;
-            console.log(textUser);
-        }
-    },
-    computed: {
-        filteredFilmList() {
-            if (this.userText === "") {
-                return this.filmList;
-            } else {
-                return this.filmList.filter(item => {
-                    return item.title.toLowerCase().includes(this.userText.toLowerCase())
+            if (this.userText !== "") {
+                let currentUrl = this.apiUrl + "&query=" + this.userText;
+                console.log(currentUrl);
+                axios
+                    .get(currentUrl)
+                    .then((result) => {
+                    this.filmList = result.data.results;
+                    console.log(this.filmList);
+                })
+                    .catch((error) => {
+                    console.log("Errore", error);
                 });
             }
+        },
+        
+        // per salvare il testo della searchbar
+        searchFilm(textUser) {
+            this.userText = textUser;
+            console.log(this.userText);
+            this.getFilm();
         }
     }
 }
