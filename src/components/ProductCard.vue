@@ -6,8 +6,12 @@
         <p>{{objectCardFilm.media_type}}</p>
         <p>Lingua originale: <lang-flag :iso="objectCardFilm.original_language" /></p>
         <p>Voto: {{Math.round(objectCardFilm.vote_average/2)}}</p>
-        <font-awesome-icon v-for="i in getStars(objectCardFilm.vote_average)" :key="i" icon="fa-solid fa-star"/>
-        <font-awesome-icon v-for="i in getEmptyStars(objectCardFilm.vote_average)" :key="i" icon="fa-regular fa-star"/>
+        <span>
+            <i v-for="(star, i) in voto" :key="i"><font-awesome-icon icon="fa-solid fa-star"/></i>
+        </span>
+        <span>
+            <i v-for="(star, i) in (5 - voto)" :key="i"><font-awesome-icon icon="fa-regular fa-star"/></i>
+        </span>
     </div>
 </template>
 
@@ -20,16 +24,11 @@ export default {
         LangFlag
     },
     props: {
-        objectCardFilm: Object,
+        objectCardFilm: Object
     },
-    methods: {
-        getStars(vote) {
-            let calc = parseInt(Math.round(vote/2));
-            return calc;
-        },
-        getEmptyStars(vote) {
-            let pippo = parseInt(Math.round(5-(vote/2)));
-            return pippo;
+    data() {
+        return {
+            voto: Math.round(this.objectCardFilm.vote_average / 2)
         }
     }
 }
