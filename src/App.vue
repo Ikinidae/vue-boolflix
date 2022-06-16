@@ -2,7 +2,9 @@
   <div id="app">
     <BoolflixHeader @mySearch="searchFilm" />
     <main>
-      <ProductCard v-for="(item, i) in filmList" :key="i" :objectCardFilm="item" />
+      <div id="cards">
+        <ProductCard v-for="(item, i) in filmList" :key="i" :objectCardFilm="item" />
+      </div>
     </main>
   </div>
 </template>
@@ -69,5 +71,15 @@ export default {
 main {
     background-color: gray;
     height: calc(100vh - 60px);
+
+    #cards {
+      display: flex;
+      flex-wrap: wrap;
+      height: calc(100vh - 80px);
+      overflow: auto;
+      padding-left: 11%;
+      padding-right: 11%;
+      padding-top: 20px;
+    }
 }
 </style>
